@@ -1,3 +1,4 @@
+import 'package:cripto_moedas/configs/app_settings.dart';
 import 'package:cripto_moedas/repositories/favoritas_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,8 +6,11 @@ import 'meu_aplicativo.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => FavoritasRepository(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppSettings()),
+        ChangeNotifierProvider(create: (context) => FavoritasRepository()),
+      ],
       child: MeuAplicativo(),
     ),
   );

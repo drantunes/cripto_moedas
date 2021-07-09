@@ -18,7 +18,7 @@ class DB {
 
   _initDatabase() async {
     return await openDatabase(
-      join(await getDatabasesPath(), 'cripto.db'),
+      join(await getDatabasesPath(), 'criptoo.db'),
       version: 1,
       onCreate: _onCreate,
     );

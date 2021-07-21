@@ -46,3 +46,6 @@ app.*.map.json
 /android/app/release
 **/ios/GoogleService-Info.plist
 **/android/app/google-services.json
+**/functions/.runtimeconfig.json
+**/functions/node_modules
+**/functions/lib

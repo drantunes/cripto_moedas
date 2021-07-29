@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:social_share/social_share.dart';
 
 class MoedasDetalhesPage extends StatefulWidget {
   Moeda moeda;
@@ -46,6 +47,13 @@ class _MoedasDetalhesPageState extends State<MoedasDetalhesPage> {
     }
   }
 
+  compartilharPreco() {
+    final moeda = widget.moeda;
+    SocialShare.shareOptions(
+      "Confira o preço do ${moeda.nome} agora: ${real.format(moeda.preco)}",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     readNumberFormat();
@@ -54,6 +62,12 @@ class _MoedasDetalhesPageState extends State<MoedasDetalhesPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.moeda.nome),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.share),
+            onPressed: compartilharPreco,
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(24),

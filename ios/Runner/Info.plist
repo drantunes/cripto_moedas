@@ -4,6 +4,8 @@
 	<dict>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
+		<key>CFBundleDisplayName</key>
+		<string>Cripto Moedas</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -11,7 +13,7 @@
 		<key>CFBundleInfoDictionaryVersion</key>
 		<string>6.0</string>
 		<key>CFBundleName</key>
-		<string>Criptu</string>
+		<string>cripto_moedas</string>
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
@@ -41,26 +43,23 @@
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
-		<key>NSAppTransportSecurity</key>
-		<dict>
-			<key>NSAllowsLocalNetworking</key>
-			<true/>
-		</dict>
-		<key>NSCameraUsageDescription</key>
-		<string>Can I use the camera please?</string>
-		<key>NSMicrophoneUsageDescription</key>
-		<string>Can I use the mic please?</string>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
+		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>NSCameraUsageDescription</key>
+		<string>your usage description here</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>your usage description here</string>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>instagram-stories</string>
+			<string>facebook-stories</string>
+			<string>facebook</string>
+			<string>instagram</string>
+			<string>twitter</string>
+			<string>whatsapp</string>
+			<string>tg</string>
+		</array>
 	</dict>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-	<string>instagram-stories</string>
-	<string>facebook-stories</string>
-	<string>facebook</string>
-	<string>instagram</string>
-	<string>twitter</string>
-	<string>whatsapp</string>
-    <string>tg</string>
-	</array>
 </plist>

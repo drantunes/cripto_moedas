@@ -5,27 +5,28 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthCheck extends StatefulWidget {
-  AuthCheck({Key? key}) : super(key: key);
+  const AuthCheck({Key? key}) : super(key: key);
 
   @override
-  _AuthCheckState createState() => _AuthCheckState();
+  State<AuthCheck> createState() => AuthCheckState();
 }
 
-class _AuthCheckState extends State<AuthCheck> {
+class AuthCheckState extends State<AuthCheck> {
   @override
   Widget build(BuildContext context) {
     AuthService auth = Provider.of<AuthService>(context);
 
-    if (auth.isLoading)
+    if (auth.isLoading) {
       return loading();
-    else if (auth.usuario == null)
-      return LoginPage();
-    else
-      return HomePage();
+    } else if (auth.usuario == null) {
+      return const LoginPage();
+    } else {
+      return const HomePage();
+    }
   }
 
   loading() {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
       ),

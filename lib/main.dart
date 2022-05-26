@@ -4,8 +4,9 @@ import 'package:cripto_moedas/repositories/conta_repository.dart';
 import 'package:cripto_moedas/repositories/favoritas_repository.dart';
 import 'package:cripto_moedas/repositories/moeda_repository.dart';
 import 'package:cripto_moedas/services/auth_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'meu_aplicativo.dart';
@@ -13,14 +14,19 @@ import 'meu_aplicativo.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveConfig.start();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
-        ChangeNotifierProvider(create: (context) => MoedaRepository()),
+        ChangeNotifierProvider(
+          create: (context) => MoedaRepository(),
+          lazy: false,
+        ),
         ChangeNotifierProvider(
             create: (context) => ContaRepository(
                   moedas: context.read<MoedaRepository>(),
@@ -33,7 +39,7 @@ void main() async {
           ),
         ),
       ],
-      child: MeuAplicativo(),
+      child: const MeuAplicativo(),
     ),
   );
 }

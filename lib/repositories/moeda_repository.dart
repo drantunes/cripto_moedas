@@ -57,8 +57,8 @@ class MoedaRepository extends ChangeNotifier {
       Database db = await DB.instance.database;
       Batch batch = db.batch();
 
-      _tabela.forEach((atual) {
-        moedas.forEach((novo) {
+      for (var atual in _tabela) {
+        for (var novo in moedas) {
           if (atual.baseId == novo['base_id']) {
             final moeda = novo['prices'];
             final preco = moeda['latest_price'];
@@ -80,8 +80,8 @@ class MoedaRepository extends ChangeNotifier {
               whereArgs: [atual.baseId],
             );
           }
-        });
-      });
+        }
+      }
       await batch.commit(noResult: true);
       await _readMoedasTable();
     }
@@ -129,7 +129,7 @@ class MoedaRepository extends ChangeNotifier {
         Database db = await DB.instance.database;
         Batch batch = db.batch();
 
-        moedas.forEach((moeda) {
+        for (var moeda in moedas) {
           final preco = moeda['latest_price'];
           final timestamp = DateTime.parse(preco['timestamp']);
 
@@ -147,14 +147,14 @@ class MoedaRepository extends ChangeNotifier {
             'mudancaAno': preco['percent_change']['year'].toString(),
             'mudancaPeriodoTotal': preco['percent_change']['all'].toString()
           });
-        });
+        }
         await batch.commit(noResult: true);
       }
     }
   }
 
   _setupMoedasTable() async {
-    final String table = '''
+    const String table = '''
       CREATE TABLE IF NOT EXISTS moedas (
         baseId TEXT PRIMARY KEY,
         sigla TEXT,

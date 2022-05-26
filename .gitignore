@@ -49,3 +49,4 @@ app.*.map.json
 **/functions/.runtimeconfig.json
 **/functions/node_modules
 **/functions/lib
+/lib/firebase_options.dart

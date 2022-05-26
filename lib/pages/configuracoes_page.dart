@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:camera/camera.dart';
+// import 'package:camera/camera.dart';
 import 'package:cripto_moedas/configs/app_settings.dart';
 import 'package:cripto_moedas/pages/documentos_page.dart';
 import 'package:cripto_moedas/repositories/conta_repository.dart';
@@ -12,10 +12,10 @@ import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
-  ConfiguracoesPage({Key? key}) : super(key: key);
+  const ConfiguracoesPage({Key? key}) : super(key: key);
 
   @override
-  _ConfiguracoesPageState createState() => _ConfiguracoesPageState();
+  State<ConfiguracoesPage> createState() => _ConfiguracoesPageState();
 }
 
 class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
@@ -25,56 +25,52 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
   Widget build(BuildContext context) {
     final conta = context.watch<ContaRepository>();
     final loc = context.read<AppSettings>().locale;
-    NumberFormat real =
-        NumberFormat.currency(locale: loc['locale'], name: loc['name']);
+    NumberFormat real = NumberFormat.currency(locale: loc['locale'], name: loc['name']);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Configurações'),
+        title: const Text('Configurações'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         child: Column(
           children: [
             ListTile(
-              title: Text('Saldo'),
+              title: const Text('Saldo'),
               subtitle: Text(
                 real.format(conta.saldo),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 25,
                   color: Colors.indigo,
                 ),
               ),
-              trailing:
-                  IconButton(onPressed: updateSaldo, icon: Icon(Icons.edit)),
+              trailing: IconButton(onPressed: updateSaldo, icon: const Icon(Icons.edit)),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
-              leading: Icon(Icons.camera_alt),
-              title: Text('Escanear a CNH ou RG'),
+              leading: const Icon(Icons.camera_alt),
+              title: const Text('Escanear a CNH ou RG'),
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DocumentosPage(),
+                  builder: (context) => const DocumentosPage(),
                   fullscreenDialog: true,
                 ),
               ),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
-              leading: Icon(Icons.attach_file),
-              title: Text('Enviar Comprovante de Depósito'),
+              leading: const Icon(Icons.attach_file),
+              title: const Text('Enviar Comprovante de Depósito'),
               onTap: selecionarComprovante,
-              trailing: comprovante != null
-                  ? Image.file(File(comprovante!.path))
-                  : null,
+              trailing: comprovante != null ? Image.file(File(comprovante!.path)) : null,
             ),
-            Divider(),
+            const Divider(),
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 24),
+                  padding: const EdgeInsets.symmetric(vertical: 24),
                   child: OutlinedButton(
                     onPressed: () => context.read<AuthService>().logout(),
                     style: OutlinedButton.styleFrom(
@@ -82,7 +78,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: const [
                         Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Text(
@@ -108,8 +104,8 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
     try {
       XFile? file = await picker.pickImage(source: ImageSource.gallery);
       if (file != null) setState(() => comprovante = file);
-    } catch (e) {
-      print(e);
+    } on Exception catch (e) {
+      debugPrint(e.toString());
     }
   }
 
@@ -121,7 +117,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
     valor.text = conta.saldo.toString();
 
     AlertDialog dialog = AlertDialog(
-      title: Text('Atualizar o Saldo'),
+      title: const Text('Atualizar o Saldo'),
       content: Form(
         key: form,
         child: TextFormField(
@@ -137,8 +133,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
         ),
       ),
       actions: [
-        TextButton(
-            onPressed: () => Navigator.pop(context), child: Text('CANCELAR')),
+        TextButton(onPressed: () => Navigator.pop(context), child: const Text('CANCELAR')),
         TextButton(
           onPressed: () {
             if (form.currentState!.validate()) {
@@ -146,7 +141,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
               Navigator.pop(context);
             }
           },
-          child: Text('SALVAR'),
+          child: const Text('SALVAR'),
         ),
       ],
     );

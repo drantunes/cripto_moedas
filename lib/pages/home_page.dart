@@ -5,10 +5,10 @@ import 'package:cripto_moedas/pages/moedas_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -32,28 +32,27 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: PageView(
         controller: pc,
-        children: [
+        onPageChanged: setPaginaAtual,
+        children: const [
           MoedasPage(),
           FavoritasPage(),
           CarteiraPage(),
           ConfiguracoesPage(),
         ],
-        onPageChanged: setPaginaAtual,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: paginaAtual,
         type: BottomNavigationBarType.fixed,
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Todas'),
           BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favoritas'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_balance_wallet), label: 'Carteira'),
+          BottomNavigationBarItem(icon: Icon(Icons.account_balance_wallet), label: 'Carteira'),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Conta'),
         ],
         onTap: (pagina) {
           pc.animateToPage(
             pagina,
-            duration: Duration(milliseconds: 400),
+            duration: const Duration(milliseconds: 400),
             curve: Curves.ease,
           );
         },

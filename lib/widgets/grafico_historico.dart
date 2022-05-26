@@ -7,18 +7,18 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GraficoHistorico extends StatefulWidget {
-  Moeda moeda;
-  GraficoHistorico({Key? key, required this.moeda}) : super(key: key);
+  final Moeda moeda;
+  const GraficoHistorico({Key? key, required this.moeda}) : super(key: key);
 
   @override
-  _GraficoHistoricoState createState() => _GraficoHistoricoState();
+  State<GraficoHistorico> createState() => _GraficoHistoricoState();
 }
 
 enum Periodo { hora, dia, semana, mes, ano, total }
 
 class _GraficoHistoricoState extends State<GraficoHistorico> {
   List<Color> cores = [
-    Color(0xFF3F51B5),
+    const Color(0xFF3F51B5),
   ];
   Periodo periodo = Periodo.hora;
   List<Map<String, dynamic>> historico = [];
@@ -36,13 +36,12 @@ class _GraficoHistoricoState extends State<GraficoHistorico> {
     loaded.value = false;
     dadosGrafico = [];
 
-    if (historico.isEmpty)
-      historico = await repositorio.getHistoricoMoeda(widget.moeda);
+    if (historico.isEmpty) historico = await repositorio.getHistoricoMoeda(widget.moeda);
 
     dadosCompletos = historico[periodo.index]['prices'];
     dadosCompletos = dadosCompletos.reversed.map((item) {
       double preco = double.parse(item[0]);
-      int time = int.parse(item[1].toString() + '000');
+      int time = int.parse('${item[1]}000');
       return [preco, DateTime.fromMillisecondsSinceEpoch(time)];
     }).toList();
 
@@ -77,24 +76,24 @@ class _GraficoHistoricoState extends State<GraficoHistorico> {
         LineChartBarData(
           spots: dadosGrafico,
           isCurved: true,
-          colors: cores,
+          color: cores[0],
           barWidth: 2,
           dotData: FlDotData(show: false),
           belowBarData: BarAreaData(
             show: true,
-            colors: cores.map((color) => color.withOpacity(0.15)).toList(),
+            color: cores[0].withOpacity(0.15),
           ),
         ),
       ],
       lineTouchData: LineTouchData(
         touchTooltipData: LineTouchTooltipData(
-          tooltipBgColor: Color(0xFF343434),
+          tooltipBgColor: const Color(0xFF343434),
           getTooltipItems: (data) {
             return data.map((item) {
               final date = getDate(item.spotIndex);
               return LineTooltipItem(
                 real.format(item.y),
-                TextStyle(
+                const TextStyle(
                   color: Colors.white,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -118,10 +117,11 @@ class _GraficoHistoricoState extends State<GraficoHistorico> {
 
   getDate(int index) {
     DateTime date = dadosCompletos[index][1];
-    if (periodo != Periodo.ano && periodo != Periodo.total)
+    if (periodo != Periodo.ano && periodo != Periodo.total) {
       return DateFormat('dd/MM - hh:mm').format(date);
-    else
+    } else {
       return DateFormat('dd/MM/y').format(date);
+    }
   }
 
   chartButton(Periodo p, String label) {
@@ -129,7 +129,6 @@ class _GraficoHistoricoState extends State<GraficoHistorico> {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: OutlinedButton(
         onPressed: () => setState(() => periodo = p),
-        child: Text(label),
         style: (periodo != p)
             ? ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.grey),
@@ -137,6 +136,7 @@ class _GraficoHistoricoState extends State<GraficoHistorico> {
             : ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.indigo[50]),
               ),
+        child: Text(label),
       ),
     );
   }
@@ -148,41 +148,39 @@ class _GraficoHistoricoState extends State<GraficoHistorico> {
     real = NumberFormat.currency(locale: loc['locale'], name: loc['name']);
     setDados();
 
-    return Container(
-      child: AspectRatio(
-        aspectRatio: 2,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  chartButton(Periodo.hora, '1H'),
-                  chartButton(Periodo.dia, '24H'),
-                  chartButton(Periodo.semana, '7D'),
-                  chartButton(Periodo.mes, 'Mês'),
-                  chartButton(Periodo.ano, 'Ano'),
-                  chartButton(Periodo.total, 'Tudo'),
-                ],
-              ),
+    return AspectRatio(
+      aspectRatio: 2,
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                chartButton(Periodo.hora, '1H'),
+                chartButton(Periodo.dia, '24H'),
+                chartButton(Periodo.semana, '7D'),
+                chartButton(Periodo.mes, 'Mês'),
+                chartButton(Periodo.ano, 'Ano'),
+                chartButton(Periodo.total, 'Tudo'),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 80),
-              child: ValueListenableBuilder(
-                valueListenable: loaded,
-                builder: (context, bool isLoaded, _) {
-                  return (isLoaded)
-                      ? LineChart(
-                          getChartData(),
-                        )
-                      : Center(
-                          child: CircularProgressIndicator(),
-                        );
-                },
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 80),
+            child: ValueListenableBuilder(
+              valueListenable: loaded,
+              builder: (context, bool isLoaded, _) {
+                return (isLoaded)
+                    ? LineChart(
+                        getChartData(),
+                      )
+                    : const Center(
+                        child: CircularProgressIndicator(),
+                      );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

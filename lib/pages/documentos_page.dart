@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
 class DocumentosPage extends StatefulWidget {
-  DocumentosPage({Key? key}) : super(key: key);
+  const DocumentosPage({Key? key}) : super(key: key);
 
   @override
-  _DocumentosPageState createState() => _DocumentosPageState();
+  State<DocumentosPage> createState() => _DocumentosPageState();
 }
 
 class _DocumentosPageState extends State<DocumentosPage> {
@@ -27,13 +27,13 @@ class _DocumentosPageState extends State<DocumentosPage> {
       cameras = await availableCameras();
       _startCamera();
     } on CameraException catch (e) {
-      print(e.description);
+      debugPrint(e.description);
     }
   }
 
   _startCamera() {
     if (cameras.isEmpty) {
-      print('Câmera não foi encontrada');
+      debugPrint('Câmera não foi encontrada');
     } else {
       _previewCamera(cameras.first);
     }
@@ -51,7 +51,7 @@ class _DocumentosPageState extends State<DocumentosPage> {
     try {
       await cameraController.initialize();
     } on CameraException catch (e) {
-      print(e.description);
+      debugPrint(e.description);
     }
 
     if (mounted) {
@@ -64,7 +64,7 @@ class _DocumentosPageState extends State<DocumentosPage> {
     size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Documento Oficial'),
+        title: const Text('Documento Oficial'),
         backgroundColor: Colors.grey[900],
         centerTitle: true,
         elevation: 0,
@@ -78,7 +78,7 @@ class _DocumentosPageState extends State<DocumentosPage> {
       floatingActionButton: (imagem != null)
           ? FloatingActionButton.extended(
               onPressed: () => Navigator.pop(context),
-              label: Text('Finalizar'),
+              label: const Text('Finalizar'),
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -86,7 +86,7 @@ class _DocumentosPageState extends State<DocumentosPage> {
   }
 
   _arquivoWidget() {
-    return Container(
+    return SizedBox(
       width: size!.width - 50,
       height: size!.height - (size!.height / 3),
       child: imagem == null
@@ -102,7 +102,7 @@ class _DocumentosPageState extends State<DocumentosPage> {
     final CameraController? cameraController = controller;
 
     if (cameraController == null || !cameraController.value.isInitialized) {
-      return Text('Widget para Câmera que não está disponível');
+      return const Text('Widget para Câmera que não está disponível');
     } else {
       return Stack(
         alignment: AlignmentDirectional.bottomCenter,
@@ -116,12 +116,12 @@ class _DocumentosPageState extends State<DocumentosPage> {
 
   _botaoCapturaWidget() {
     return Padding(
-      padding: EdgeInsets.only(bottom: 24),
+      padding: const EdgeInsets.only(bottom: 24),
       child: CircleAvatar(
         radius: 32,
         backgroundColor: Colors.black.withOpacity(0.5),
         child: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.camera_alt,
             color: Colors.white,
             size: 30,
@@ -140,7 +140,7 @@ class _DocumentosPageState extends State<DocumentosPage> {
         XFile file = await cameraController.takePicture();
         if (mounted) setState(() => imagem = file);
       } on CameraException catch (e) {
-        print(e.description);
+        debugPrint(e.description);
       }
     }
   }

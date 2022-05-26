@@ -54,11 +54,8 @@ class ContaRepository extends ChangeNotifier {
       );
       // Se não tem a moeda em carteira
       if (posicaoMoeda.isEmpty) {
-        await txn.insert('carteira', {
-          'sigla': moeda.sigla,
-          'moeda': moeda.nome,
-          'quantidade': (valor / moeda.preco).toString()
-        });
+        await txn.insert('carteira',
+            {'sigla': moeda.sigla, 'moeda': moeda.nome, 'quantidade': (valor / moeda.preco).toString()});
       }
       // Já tem a moeda em carteira
       else {
@@ -91,7 +88,7 @@ class ContaRepository extends ChangeNotifier {
   _getCarteira() async {
     _carteira = [];
     List posicoes = await db.query('carteira');
-    posicoes.forEach((posicao) {
+    for (var posicao in posicoes) {
       Moeda moeda = moedas.tabela.firstWhere(
         (m) => m.sigla == posicao['sigla'],
       );
@@ -99,28 +96,27 @@ class ContaRepository extends ChangeNotifier {
         moeda: moeda,
         quantidade: double.parse(posicao['quantidade']),
       ));
-    });
+    }
     notifyListeners();
   }
 
   _getHistorico() async {
     _historico = [];
     List operacoes = await db.query('historico');
-    operacoes.forEach((operacao) {
+    for (var operacao in operacoes) {
       Moeda moeda = moedas.tabela.firstWhere(
         (m) => m.sigla == operacao['sigla'],
       );
       _historico.add(
         Historico(
-          dataOperacao:
-              DateTime.fromMillisecondsSinceEpoch(operacao['data_operacao']),
+          dataOperacao: DateTime.fromMillisecondsSinceEpoch(operacao['data_operacao']),
           tipoOperacao: operacao['tipo_operacao'],
           moeda: moeda,
           valor: operacao['valor'],
           quantidade: double.parse(operacao['quantidade']),
         ),
       );
-    });
+    }
     notifyListeners();
   }
 }

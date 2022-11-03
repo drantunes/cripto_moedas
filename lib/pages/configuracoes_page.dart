@@ -1,15 +1,16 @@
 import 'dart:io';
 
-// import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
 import 'package:cripto_moedas/configs/app_settings.dart';
 import 'package:cripto_moedas/pages/documentos_page.dart';
 import 'package:cripto_moedas/repositories/conta_repository.dart';
 import 'package:cripto_moedas/services/auth_service.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ConfiguracoesPage extends StatefulWidget {
   const ConfiguracoesPage({Key? key}) : super(key: key);
@@ -74,7 +75,7 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
                   child: OutlinedButton(
                     onPressed: () => context.read<AuthService>().logout(),
                     style: OutlinedButton.styleFrom(
-                      primary: Colors.red,
+                      foregroundColor: Colors.red,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

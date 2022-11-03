@@ -25,30 +25,30 @@ dependencies:
     sdk: flutter
   intl:
   path: 
-  provider: ^6.0.2
+  provider: ^6.0.4
   shared_preferences: ^2.0.15
-  hive: ^2.0.4
+  hive: ^2.2.3
   hive_flutter: ^1.1.0
-  path_provider: ^2.0.2
-  sqflite: ^2.0.0+3
-  fl_chart: ^0.50.6
-  firebase_core: "^1.17.0"
-  firebase_auth: "^3.3.18"
-  cloud_firestore: "^3.1.15"
-  http: ^0.13.3
-  camera:
-    git:
-      url: https://github.com/flutter/plugins
-      path: packages/camera/camera
-      ref: 9e46048ad2e1f085c1e8f6c77391fa52025e681f
-  image_picker: ^0.8.2
+  path_provider: ^2.0.11
+  sqflite: ^2.2.0+3
+  fl_chart: ^0.55.2
+  firebase_core: ^2.1.1
+  firebase_auth: ^4.1.1
+  cloud_firestore: ^4.0.4
+  http: ^0.13.5
+  camera: ^0.10.0+4
+    # git:
+    #   url: https://github.com/flutter/plugins
+    #   path: packages/camera/camera
+    #   ref: 9e46048ad2e1f085c1e8f6c77391fa52025e681f
+  image_picker: ^0.8.6
   flutter_native_splash: ^2.2.0+1 
-  flutter_launcher_icons: ^0.9.2
+  flutter_launcher_icons: ^0.10.0
   social_share: ^2.2.1
   
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
 
 flutter_native_splash:
   color: "#3F51B5"

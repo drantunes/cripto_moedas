@@ -1,12 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
 import 'package:cripto_moedas/configs/app_settings.dart';
 import 'package:cripto_moedas/models/moeda.dart';
 import 'package:cripto_moedas/repositories/conta_repository.dart';
+import 'package:cripto_moedas/services/auth_service.dart';
 import 'package:cripto_moedas/widgets/grafico_historico.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
-import 'package:social_share/social_share.dart';
 // import 'package:social_share/social_share.dart';
 
 class MoedasDetalhesPage extends StatefulWidget {
@@ -51,9 +53,9 @@ class _MoedasDetalhesPageState extends State<MoedasDetalhesPage> {
 
   compartilharPreco() {
     final moeda = widget.moeda;
-    SocialShare.shareOptions(
-      "Confira o preço do ${moeda.nome} agora: ${real.format(moeda.preco)}",
-    );
+    // SocialShare.shareOptions(
+    //   "Confira o preço do ${moeda.nome} agora: ${real.format(moeda.preco)}",
+    // );
   }
 
   @override
@@ -68,6 +70,10 @@ class _MoedasDetalhesPageState extends State<MoedasDetalhesPage> {
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: compartilharPreco,
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () => context.read<AuthService>().logout(),
           ),
         ],
       ),

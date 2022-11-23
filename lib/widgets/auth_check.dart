@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
+
 import 'package:cripto_moedas/pages/home_page.dart';
 import 'package:cripto_moedas/pages/login_page.dart';
 import 'package:cripto_moedas/services/auth_service.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AuthCheck extends StatefulWidget {
   const AuthCheck({Key? key}) : super(key: key);

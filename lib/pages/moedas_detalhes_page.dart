@@ -10,6 +10,7 @@ import 'package:cripto_moedas/repositories/conta_repository.dart';
 import 'package:cripto_moedas/services/auth_service.dart';
 import 'package:cripto_moedas/widgets/grafico_historico.dart';
 // import 'package:social_share/social_share.dart';
+import 'package:flutter_share_me/flutter_share_me.dart';
 
 class MoedasDetalhesPage extends StatefulWidget {
   final Moeda moeda;
@@ -51,8 +52,11 @@ class _MoedasDetalhesPageState extends State<MoedasDetalhesPage> {
     }
   }
 
-  compartilharPreco() {
+  compartilharPreco() async {
     final moeda = widget.moeda;
+    final FlutterShareMe shareMe = FlutterShareMe();
+
+    shareMe.shareToSystem(msg: "Confira o preço do ${moeda.nome} agora: ${real.format(moeda.preco)}");
     // SocialShare.shareOptions(
     //   "Confira o preço do ${moeda.nome} agora: ${real.format(moeda.preco)}",
     // );

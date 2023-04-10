@@ -5,6 +5,7 @@ import 'package:cripto_moedas/databases/db_firestore.dart';
 import 'package:cripto_moedas/models/moeda.dart';
 import 'package:cripto_moedas/repositories/moeda_repository.dart';
 import 'package:cripto_moedas/services/auth_service.dart';
+
 import 'package:flutter/material.dart';
 
 class FavoritasRepository extends ChangeNotifier {

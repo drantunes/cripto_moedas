@@ -117,36 +117,41 @@ class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
 
     valor.text = conta.saldo.toString();
 
-    AlertDialog dialog = AlertDialog(
-      title: const Text('Atualizar o Saldo'),
-      content: Form(
-        key: form,
-        child: TextFormField(
-          controller: valor,
-          keyboardType: TextInputType.number,
-          inputFormatters: [
-            FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
-          ],
-          validator: (value) {
-            if (value!.isEmpty) return 'Informe o valor do saldo';
-            return null;
-          },
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Atualizar o Saldo'),
+        content: Form(
+          key: form,
+          child: TextFormField(
+            controller: valor,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
+            ],
+            validator: (value) {
+              if (value!.isEmpty) return 'Informe o valor do saldo';
+              return null;
+            },
+          ),
         ),
-      ),
-      actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('CANCELAR')),
-        TextButton(
-          onPressed: () {
-            if (form.currentState!.validate()) {
-              conta.setSaldo(double.parse(valor.text));
-              Navigator.pop(context);
-            }
-          },
-          child: const Text('SALVAR'),
-        ),
-      ],
-    );
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('CANCELAR'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (form.currentState!.validate()) {
+                conta.setSaldo(double.parse(valor.text));
 
-    showDialog(context: context, builder: (context) => dialog);
+                Navigator.of(context).pop();
+              }
+            },
+            child: const Text('SALVAR'),
+          ),
+        ],
+      ),
+    );
   }
 }
